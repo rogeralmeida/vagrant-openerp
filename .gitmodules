@@ -1,0 +1,15 @@
+[submodule "manifests/modules/stdlib"]
+	path = manifests/modules/stdlib
+	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
+[submodule "manifests/modules/rvm"]
+	path = manifests/modules/rvm
+	url = https://github.com/maestrodev/puppet-rvm.git
+[submodule "manifests/modules/postgresql"]
+	path = manifests/modules/postgresql
+	url = https://github.com/puppetlabs/puppetlabs-postgresql.git
+[submodule "manifests/modules/locales"]
+	path = manifests/modules/locales
+	url = https://github.com/saz/puppet-locales.git
+[submodule "manifests/modules/concat"]
+	path = manifests/modules/concat
+	url = https://github.com/puppetlabs/puppetlabs-concat.git
