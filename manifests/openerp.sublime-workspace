@@ -5,7 +5,7 @@
 		[
 			[
 				"open",
-				"openerp"
+				"openerp-source"
 			],
 			[
 				"op",
@@ -87,23 +87,7 @@
 			"file": "default.pp",
 			"settings":
 			{
-				"buffer_size": 3832,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/ralmeid/workspaces/roger/pecascelular/manifests/init.pp",
-			"settings":
-			{
-				"buffer_size": 1507,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/ralmeid/workspaces/roger/openerp/Vagrantfile",
-			"settings":
-			{
-				"buffer_size": 4828,
+				"buffer_size": 2412,
 				"line_ending": "Unix"
 			}
 		}
@@ -160,6 +144,10 @@
 	},
 	"file_history":
 	[
+		"/Users/ralmeid/workspaces/roger/vagrant_openerp/Vagrantfile",
+		"/Users/ralmeid/workspaces/roger/openerp/manifests/default.pp",
+		"/Users/ralmeid/workspaces/roger/pecascelular/manifests/init.pp",
+		"/Users/ralmeid/workspaces/roger/openerp/Vagrantfile",
 		"/Users/ralmeid/workspaces/tw/ipython/Vagrantfile",
 		"/Users/ralmeid/workspaces/roger/pecascelular/Vagrantfile",
 		"/Users/ralmeid/workspaces/tw/ipython/manifests/default.pp",
@@ -185,7 +173,6 @@
 		"/Users/ralmeid/workspaces/roger/pecascelular/app/views/admin/sells/online_sell_orders/index.html.haml",
 		"/Users/ralmeid/workspaces/roger/pecascelular/app/models/service_order.rb",
 		"/Users/ralmeid/workspaces/roger/pecascelular/app/helpers/admin/servicos/service_orders_helper.rb",
-		"/Users/ralmeid/workspaces/roger/pecascelular/manifests/init.pp",
 		"/Users/ralmeid/workspaces/roger/pecascelular/app/helpers/admin/sells/sell_order_helper.rb",
 		"/Users/ralmeid/workspaces/roger/pecascelular/app/models/online_sell_order.rb",
 		"/Users/ralmeid/workspaces/roger/pecascelular/db/migrate/20130925150140_add_status_updated_at_to_service_orders.rb",
@@ -266,15 +253,15 @@
 					"file": "default.pp",
 					"settings":
 					{
-						"buffer_size": 3832,
+						"buffer_size": 2412,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3284,
-								3284
+								1589,
+								1589
 							]
 						],
 						"settings":
@@ -284,63 +271,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 900.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/Users/ralmeid/workspaces/roger/pecascelular/manifests/init.pp",
-					"settings":
-					{
-						"buffer_size": 1507,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1004,
-								1039
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Puppet/Syntaxes/Puppet.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 373.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/Users/ralmeid/workspaces/roger/openerp/Vagrantfile",
-					"settings":
-					{
-						"buffer_size": 4828,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								810,
-								810
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 95.0,
-						"translation.y": 0.0,
+						"translation.y": 460.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
