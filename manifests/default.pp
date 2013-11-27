@@ -10,28 +10,44 @@ class { 'postgresql::server':
   postgres_password          => 'postgres',
   ipv4acls                   => ['local all all trust', 'host all all 0.0.0.0/0 trust'],
   manage_pg_hba_conf         => true,
-  require  => Package['postgresql-server-dev-9.1'],
+  encoding                   => 'utf-8',
+  # require  => Package['postgresql-server-dev-9.1'],
 }
 
-#postgresql::server::role { 'openerp':
-#  password_hash => postgresql_password('openerp', 'openerp'),
-#}
-
-postgresql::server::db { 'openerpdev':
-  user     => 'openerp',
-  password => postgresql_password('openerp', 'openerp'),
+postgresql::server::role { 'openerp':
+  password_hash => postgresql_password('openerp', 'openerp'),
+  createdb      => true,
+  login         => true,
+  superuser     => true,
 }
 
-#postgresql::server::database_grant { 'openerpdev':
-#  privilege => 'ALL',
-#  db        => 'openerpdev',
-#  role      => 'openerp',
-#}
-
-package { 'postgresql-server-dev-9.1':
-    ensure => installed,
-    require  => Exec['apt-get update'],
+postgresql::server::pg_hba_rule { 'allow application network to access app database':
+  description => "Open up postgresql for openerp in localhost",
+  type => 'host',
+  database => 'all',
+  user => 'openerp',
+  address => '0.0.0.0/0',
+  auth_method => 'trust',
+  order       => 1,
 }
+
+
+# postgresql::server::db { 'openerpdev':
+#   user     => 'openerp',
+#   password => postgresql_password('openerp', 'openerp'),
+# }
+
+# postgresql::server::grant { 'openerpdev':
+#   privilege => 'ALL',
+#   db        => 'openerpdev',
+#   role      => 'openerp',
+#   require   => Postgresql::Server::Db['openerpdev']
+# }
+
+# package { 'postgresql-server-dev-9.1':
+#     ensure => installed,
+#     require  => Exec['apt-get update'],
+# }
 
 
 $dependecies=["python-dateutil", "python-feedparser", "python-gdata", "python-ldap", 
@@ -40,7 +56,10 @@ $dependecies=["python-dateutil", "python-feedparser", "python-gdata", "python-ld
 "python-simplejson", "python-tz", "python-vatnumber", "python-vobject", "python-webdav", 
 "docutils-common", "docutils-doc", "python-docutils", "python-jinja2", "python-mock", 
 "python-psutil", "python-pygments", "python-roman", "python-unittest2",
-"python-werkzeug", "python-xlwt", "python-yaml", "python-zsi", "wget", "bzr", "language-pack-UTF-8"] 
+"python-werkzeug", "python-xlwt", "python-yaml", "python-zsi", "wget", "bzr", "language-pack-en"] 
+
+#export LC_ALL="en_US.utf-8"
+#export LANGUAGE="en_US.utf-8"
 
 package {$dependecies:
   ensure => "installed",
@@ -99,17 +118,35 @@ exec {"/usr/bin/bzr checkout --lightweight lp:openobject-server/7.0 /opt/openerp
 }
 
 exec {"/usr/bin/bzr checkout --lightweight lp:openobject-addons/7.0 /opt/openerp/v7/addons":
-  creates => '/opt/openerp/v7/addons/README',
+  creates => '/opt/openerp/v7/addons/account/account.py',
   require => File["/opt/openerp/v7/addons"],
   timeout     => 4800,
 }
 
-file { "/etc/openerp-server.conf":
-  mode => "0644",
-  owner => 'vagrant',
-  group => 'vagrant',
-  source => 'puppet:///openerp-server.conf',
+file {"/etc/openerp-server.conf":
+  source => "/vagrant/openerp-server.conf",
+  require => Exec["/usr/bin/bzr checkout --lightweight lp:openobject-server/7.0 /opt/openerp/v7/server"],
+  mode => 640,
+  owner => 'vagrant'
 }
+
+file { "/var/log/openerp":
+    ensure => "directory",
+    owner => 'vagrant',
+    group => 'root'
+}
+
+file { "/etc/logrotate.d/openerp-server":
+  source => "/opt/openerp/v7/server/install/openerp-server.logrotate",
+  mode => 755
+}
+
+file {"/home/vagrant/.bashrc":
+  source => '/vagrant/.bashrc'
+}
+
+exec {"sudo -u postgres createuser -s openerp":}
+
 
 # The way I installed OE V7 on Ubuntu 12.04: Add to /etc/apt/sources.lst (warning: no space between http: and //):
 
