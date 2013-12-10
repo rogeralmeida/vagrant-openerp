@@ -10,11 +10,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "Official Ubuntu 12.04 daily Cloud Image amd64 (VirtualBox 4.1.12)"
+  config.vm.box = "dummy"
+  #config.vm.box = "Official Ubuntu 12.04 daily Cloud Image amd64 (VirtualBox 4.1.12)"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
+  #config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -56,6 +57,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
 
+  config.vm.provider :aws do |aws, override|
+    aws.access_key_id = "AKIAJXXS4BQKUKZZA66A"
+    aws.secret_access_key = "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"
+    aws.keypair_name = "mac tw public key"
+
+    aws.ami = "ami-7747d01e"
+    aws.security_groups = ['ssh', 'openerp'] 
+
+    override.ssh.username = "ubuntu"
+    override.ssh.private_key_path = "/Users/ralmeid/.ssh/id_rsa"
+    aws.user_data = "#!/bin/bash\napt-get update && apt-get install puppet -y"
+  end
   # Enable provisioning with Puppet stand alone.  Puppet manifests
   # are contained in a directory path relative to this Vagrantfile.
   # You will need to create the manifests directory and a manifest in

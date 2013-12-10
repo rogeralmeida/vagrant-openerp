@@ -10,8 +10,8 @@ class { 'postgresql::server':
   postgres_password          => 'postgres',
   ipv4acls                   => ['local all all trust', 'host all all 0.0.0.0/0 trust'],
   manage_pg_hba_conf         => true,
-  encoding                   => 'utf-8',
-  # require  => Package['postgresql-server-dev-9.1'],
+  encoding                   => 'UTF8',
+  require  => Exec['export language'],
 }
 
 postgresql::server::role { 'openerp':
@@ -31,6 +31,11 @@ postgresql::server::pg_hba_rule { 'allow application network to access app datab
   order       => 1,
 }
 
+user { 'openerp':
+  ensure     => "present",
+}
+
+#sudo -u postgres createuser -s openerp
 
 # postgresql::server::db { 'openerpdev':
 #   user     => 'openerp',
@@ -61,6 +66,10 @@ $dependecies=["python-dateutil", "python-feedparser", "python-gdata", "python-ld
 #export LC_ALL="en_US.utf-8"
 #export LANGUAGE="en_US.utf-8"
 
+exec {"export language":
+  command => "/usr/sbin/update-locale LANG=en_US.UTF-8 LC_ALL=en_US.utf-8 LANGUAGE=en_US.utf-8"
+}
+
 package {$dependecies:
   ensure => "installed",
   require  => Exec['apt-get update'],
@@ -83,24 +92,24 @@ exec { "apt-get update":
 # a fuller example, including permissions and ownership
 file { "/opt/openerp":
     ensure => "directory",
-    owner  => "vagrant",
-    group  => "vagrant",
+    owner  => "ubuntu",
+    group  => "ubuntu",
     mode   => 750,
     require => Package['bzr'],
 }
 
 file { "/opt/openerp/v7":
     ensure => "directory",
-    owner  => "vagrant",
-    group  => "vagrant",
+    owner  => "ubuntu",
+    group  => "ubuntu",
     mode   => 750,
     require => File["/opt/openerp"],
 }
 
 file { "/opt/openerp/v7/addons":
     ensure => "directory",
-    owner  => "vagrant",
-    group  => "vagrant",
+    owner  => "ubuntu",
+    group  => "ubuntu",
     mode   => 750,
     require => File["/opt/openerp/v7"],
 }
@@ -127,12 +136,12 @@ file {"/etc/openerp-server.conf":
   source => "/vagrant/openerp-server.conf",
   require => Exec["/usr/bin/bzr checkout --lightweight lp:openobject-server/7.0 /opt/openerp/v7/server"],
   mode => 640,
-  owner => 'vagrant'
+  owner => 'ubuntu'
 }
 
 file { "/var/log/openerp":
     ensure => "directory",
-    owner => 'vagrant',
+    owner => 'ubuntu',
     group => 'root'
 }
 
@@ -144,9 +153,6 @@ file { "/etc/logrotate.d/openerp-server":
 file {"/home/vagrant/.bashrc":
   source => '/vagrant/.bashrc'
 }
-
-exec {"sudo -u postgres createuser -s openerp":}
-
 
 # The way I installed OE V7 on Ubuntu 12.04: Add to /etc/apt/sources.lst (warning: no space between http: and //):
 
