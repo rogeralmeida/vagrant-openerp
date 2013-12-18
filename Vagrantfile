@@ -16,6 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   #config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
+  config.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -58,8 +59,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # information on available options.
 
   config.vm.provider :aws do |aws, override|
-    aws.access_key_id = "AKIAJXXS4BQKUKZZA66A"
-    aws.secret_access_key = "c+/VWdV3Wa8FUSbyIPiSlxJcIl35vTpVkTuqiixJ"
+    aws.access_key_id = "PUT YOUR KEY HERE"
+    aws.secret_access_key = "PUT the secret here"
     aws.keypair_name = "mac tw public key"
 
     aws.ami = "ami-7747d01e"
