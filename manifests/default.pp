@@ -147,7 +147,8 @@ file { "/var/log/openerp":
 
 file { "/etc/logrotate.d/openerp-server":
   source => "/opt/openerp/v7/server/install/openerp-server.logrotate",
-  mode => 755
+  mode => 755,
+  require => Exec["/usr/bin/bzr checkout --lightweight lp:openobject-server/7.0 /opt/openerp/v7/server"]
 }
 
 file {"/home/vagrant/.bashrc":
